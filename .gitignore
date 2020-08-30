@@ -58,6 +58,9 @@ typings/
 .cache/
 public
 
+# Travis key-pair
+scripts/gatsby-deploy
+
 # Mac files
 .DS_Store
 
