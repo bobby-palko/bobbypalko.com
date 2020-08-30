@@ -20,3 +20,5 @@ Oh, and here's a great quote from this Wikipedia on
 > firm-textured, round yolk that is bright orange-red in color.
 
 ![Chinese Salty Egg](./salty_egg.jpg)
+
+This is a true update, not sure why the egg quote is part of the default starter ¯\_(ツ)_/¯
