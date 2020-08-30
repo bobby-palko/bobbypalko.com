@@ -1,6 +1,7 @@
 language: node_js
 node_js:
 - '14.7'
+
 dist: bionic
 sudo: false
 
@@ -16,3 +17,10 @@ before_install:
 - chmod 600 ~/.ssh/gatsby-deploy
 - ssh-add ~/.ssh/gatsby-deploy
 - echo -e "Host 23.239.11.130\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+
+deploy:
+- provider: script
+  skip_cleanup: true
+  script: bash scripts/deploy.sh
+  on:
+    branch: master
