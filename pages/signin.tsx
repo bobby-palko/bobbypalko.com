@@ -2,11 +2,7 @@ import { GetServerSidePropsContext } from 'next/types';
 import { Input, Button, FormElement } from '@nextui-org/react';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { supabase } from '../util/supabaseClient';
-
-interface SignInUpForm {
-  email: string;
-  password: string;
-}
+import { SignInUpForm } from '../types/types';
 
 export async function getServerSideProps({ req }: GetServerSidePropsContext) {
   // Check if user is authenticated
