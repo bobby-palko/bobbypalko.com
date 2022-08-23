@@ -1,8 +1,10 @@
-import { GetServerSidePropsContext } from 'next/types';
-import { Input, Button, FormElement } from '@nextui-org/react';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { supabase } from '../util/supabaseClient';
+import { GetServerSidePropsContext } from 'next/types';
+import { useRouter } from 'next/router';
+import { FormElement } from '@nextui-org/react';
 import { SignInUpForm } from '../types/types';
+import { supabase } from '../util/supabaseClient';
+import SignInForm from '../components/SignInForm';
 
 export async function getServerSideProps({ req }: GetServerSidePropsContext) {
   // Check if user is authenticated
@@ -18,9 +20,7 @@ export async function getServerSideProps({ req }: GetServerSidePropsContext) {
     };
   }
 
-  return {
-    props: {},
-  };
+  return { props: {} };
 }
 
 const SignInPage = () => {
@@ -28,7 +28,12 @@ const SignInPage = () => {
     email: '',
     password: '',
   });
-  const [err, setErr] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
+
+  const handleShowSignUp = () => {
+    setIsSignUp(!isSignUp);
+  };
 
   const updateForm = (e: ChangeEvent<FormElement>) => {
     setFormData({
@@ -37,41 +42,44 @@ const SignInPage = () => {
     });
   };
 
+  const { push } = useRouter();
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
-    const { user, session, error } = await supabase.auth.signIn({
-      email: formData.email,
-      password: formData.password,
-    });
-    console.log(user);
-    console.log(session);
-    if (error) {
-      setErr(error.message);
+    if (!isSignUp) {
+      const { error } = await supabase.auth.signIn({
+        email: formData.email,
+        password: formData.password,
+      });
+      if (error) {
+        console.log(error);
+      } else {
+        push('/account');
+      }
+    } else {
+      const { error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+      });
+      if (error) {
+        console.log(error);
+      } else {
+        // TODO hide form and set a note saying check email
+      }
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {/* TODO wrap Inputs and make these more react-like */}
-      <Input
-        id="email"
-        type="email"
-        labelPlaceholder="Username"
-        value={formData.email}
-        onChange={updateForm}
-        helperText={err}
-        helperColor="error"
-      />
-      <Input.Password
-        id="password"
-        type="password"
-        labelPlaceholder="Password"
-        value={formData.password}
-        onChange={updateForm}
-      />
-      <Button type="submit">Submit</Button>
-    </form>
+    <SignInForm
+      updateForm={updateForm}
+      handleSubmit={handleSubmit}
+      formData={formData}
+      loading={loading}
+      isSignUp={isSignUp}
+      handleShowSignUp={handleShowSignUp}
+    />
   );
 };
 

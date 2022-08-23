@@ -1,7 +1,9 @@
 import { GetServerSidePropsContext } from 'next/types';
 import { useTheme, Text, Switch } from '@nextui-org/react';
 import { useTheme as useNextTheme } from 'next-themes';
+import { User } from '@supabase/supabase-js';
 import { supabase } from '../util/supabaseClient';
+import SignOut from '../components/SignOut';
 
 export async function getServerSideProps({ req }: GetServerSidePropsContext) {
   // Check if user is authenticated
@@ -18,11 +20,16 @@ export async function getServerSideProps({ req }: GetServerSidePropsContext) {
   }
 
   return {
-    props: {},
+    props: { user },
   };
 }
 
-const HomePage = () => {
+interface Props {
+  user: User | null;
+}
+
+const HomePage = ({ user }: Props) => {
+  console.log(user);
   const { theme, isDark, type } = useTheme();
   const { setTheme } = useNextTheme();
   return (
@@ -41,6 +48,7 @@ const HomePage = () => {
           onChange={(e) => setTheme(e.target.checked ? 'dark' : 'light')}
         />
       </div>
+      <SignOut />
     </div>
   );
 };
