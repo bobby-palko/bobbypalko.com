@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { GetServerSidePropsContext } from 'next/types';
 import { useRouter } from 'next/router';
-import { FormElement } from '@nextui-org/react';
+import { FormElement, Grid } from '@nextui-org/react';
 import { SignInUpForm } from '../types/types';
 import { supabase } from '../util/supabaseClient';
 import SignInForm from '../components/SignInForm';
@@ -72,14 +72,22 @@ const SignInPage = () => {
   };
 
   return (
-    <SignInForm
-      updateForm={updateForm}
-      handleSubmit={handleSubmit}
-      formData={formData}
-      loading={loading}
-      isSignUp={isSignUp}
-      handleShowSignUp={handleShowSignUp}
-    />
+    <Grid.Container
+      justify="center"
+      alignItems="center"
+      css={{ height: '100vh' }}
+    >
+      <Grid>
+        <SignInForm
+          updateForm={updateForm}
+          handleSubmit={handleSubmit}
+          formData={formData}
+          loading={loading}
+          isSignUp={isSignUp}
+          handleShowSignUp={handleShowSignUp}
+        />
+      </Grid>
+    </Grid.Container>
   );
 };
 

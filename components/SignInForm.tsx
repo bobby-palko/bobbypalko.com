@@ -61,10 +61,12 @@ const SignInForm = ({
     handleSubmit(e);
   };
   return (
-    <Card css={{ mw: '500px' }}>
+    <Card>
       <Grid.Container gap={3} direction="column" justify="center">
         <Grid>
-          <Text h1>{isSignUp ? 'Sign Up' : 'Sign In'}</Text>
+          <Text h1 css={{ textAlign: 'center' }}>
+            {isSignUp ? 'Sign Up' : 'Sign In'}
+          </Text>
           <Button
             type="button"
             onClick={handleShowSignUp}
@@ -72,6 +74,7 @@ const SignInForm = ({
             disabled={loading}
             light
             color="secondary"
+            css={{ width: '100%' }}
           >
             {isSignUp ? 'Already a user? Log In!' : 'Not a user? Sign up!'}
           </Button>
@@ -84,10 +87,11 @@ const SignInForm = ({
               helperText={helper.text}
               id="email"
               type="email"
-              labelPlaceholder="Username"
+              labelPlaceholder="Email"
               value={formData.email}
               onChange={updateForm}
               status="primary"
+              css={{ width: '100%' }}
             />
           </Grid>
           <Grid>
@@ -99,6 +103,7 @@ const SignInForm = ({
               value={formData.password}
               onChange={updateForm}
               status="primary"
+              css={{ width: '100%' }}
             />
           </Grid>
           {isSignUp && (
@@ -111,11 +116,18 @@ const SignInForm = ({
                 value={verifyPw}
                 onChange={updateVerifyPw}
                 status="primary"
+                helperText={
+                  verifyPw && verifyPw !== formData.password
+                    ? 'Passwords do not match!'
+                    : ''
+                }
+                helperColor="error"
+                css={{ width: '100%' }}
               />
             </Grid>
           )}
           <Grid>
-            <Button type="submit" disabled={loading}>
+            <Button type="submit" disabled={loading} css={{ width: '100%' }}>
               {loading ? (
                 <Loading />
               ) : (
