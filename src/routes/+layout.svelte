@@ -25,6 +25,10 @@
     }
 </script>
 
+<svelte:head>
+  <title>Hi! I'm Bobby</title>
+</svelte:head>
+
 <Drawer>
     <Navigation />
 </Drawer>
