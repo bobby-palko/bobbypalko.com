@@ -6,8 +6,14 @@
 	// Finally, your application's global stylesheet (sometimes labeled 'app.css')
 	import '../app.postcss';
 
-    import { AppBar, AppShell, Drawer, drawerStore, LightSwitch } from '@skeletonlabs/skeleton';
-    import type { DrawerSettings } from '@skeletonlabs/skeleton';
+    import { 
+        AppBar, 
+        AppShell, 
+        Drawer, 
+        drawerStore, 
+        LightSwitch, 
+        Toast } 
+    from '@skeletonlabs/skeleton';
     
 	import Hamburger from '$lib/components/Hamburger.svelte';
     import Navigation from '$lib/components/Navigation.svelte';
@@ -23,12 +29,14 @@
     <Navigation />
 </Drawer>
 
+<Toast />
+
 <AppShell slotSidebarLeft="w-0 md:w-52 bg-surface-500/10" slotFooter="text-center">
 	<svelte:fragment slot="header">
         <AppBar>
             <svelte:fragment slot="lead">
                 <Hamburger clickHandler={openDrawer}/>
-                <span class="text-3xl">Bobby!</span>
+                <span class="text-4xl">Bobby!</span>
             </svelte:fragment>
             <svelte:fragment slot="trail">
                 <LightSwitch width="w-16" height="h-8" />

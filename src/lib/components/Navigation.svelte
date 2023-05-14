@@ -3,8 +3,8 @@
 	import { page } from '$app/stores';
 
     const home = '/';
-    const loveLetters = '/love';
-    const notHome = '/nothere';
+    const secrets = '/secrets';
+    const notHome = '/not-home';
 
     $: classesActive = (href: string) => (href === $page.url.pathname ? '!variant-filled-primary' : '');
     function closeDrawer() {
@@ -27,15 +27,9 @@
             </a>
         </li>
         <li>
-            <a href="{notHome}" class="{classesActive(notHome)}" on:click={closeDrawer}>
-                <span class="badge bg-surface-500">💀</span>
-                <span class="flex-auto">Not Home</span>
-            </a>
-        </li>
-        <li>
-            <a href="{loveLetters}" class="{classesActive(loveLetters)}" on:click={closeDrawer}>
-                <span class="badge bg-surface-500">💌</span>
-                <span class="flex-auto">Love Letters</span>
+            <a href="{secrets}" class="{classesActive(secrets)}" on:click={closeDrawer}>
+                <span class="badge bg-surface-500">🤐</span>
+                <span class="flex-auto">Secrets</span>
             </a>
         </li>
     </ul>
