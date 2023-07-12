@@ -4,6 +4,7 @@
 
     const home = '/';
     const secrets = '/secrets';
+    const truth = '/truth';
     const notHome = '/not-home';
 
     $: classesActive = (href: string) => (href === $page.url.pathname ? '!variant-filled-primary' : '');
@@ -30,6 +31,12 @@
             <a href="{secrets}" class="{classesActive(secrets)}" on:click={closeDrawer}>
                 <span class="badge bg-surface-500">🤐</span>
                 <span class="flex-auto">Secrets</span>
+            </a>
+        </li>
+        <li>
+            <a href="{truth}" class="{classesActive(truth)}" on:click={closeDrawer}>
+                <span class="badge bg-surface-500">🔮</span>
+                <span class="flex-auto">Truth</span>
             </a>
         </li>
     </ul>
