@@ -9,22 +9,23 @@
 	$: ({ session, supabase, profile } = data);
 
 	let profileForm: HTMLFormElement;
-	let loading = false;
+	let updateButtonLoading = false;
+	let signOutButtonLoading = false;
 	let fullName: string = profile?.full_name ?? '';
 	let username: string = profile?.username ?? '';
 	let avatarUrl: string = profile?.avatar_url ?? '';
 
 	const handleSubmit: SubmitFunction = () => {
-		loading = true;
+		updateButtonLoading = true;
 		return async () => {
-			loading = false;
+			updateButtonLoading = false;
 		};
 	};
 
 	const handleSignOut: SubmitFunction = () => {
-		loading = true;
+		signOutButtonLoading = true;
 		return async ({ update }) => {
-			loading = false;
+			signOutButtonLoading = false;
 			update();
 		};
 	};
@@ -65,7 +66,7 @@
 		</div>
 
 		<div class="self-center">
-			<Button {loading} style="primary">Update</Button>
+			<Button loading={updateButtonLoading} style="primary">Update</Button>
 		</div>
 	</form>
 
@@ -76,7 +77,8 @@
 		use:enhance={handleSignOut}
 	>
 		<div>
-			<button class="btn variant-filled-secondary" disabled={loading}>Sign Out</button>
+			<!-- TODO make into Button component -->
+			<button class="btn variant-filled-secondary" disabled={signOutButtonLoading}>Sign Out</button>
 		</div>
 	</form>
 </div>
