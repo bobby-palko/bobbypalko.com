@@ -20,9 +20,8 @@ export const actions = {
 
 			return { success: true };
 		} catch(e) {
-		console.log(e);
-		
-		return fail(422);
+			console.log(e);
+			return fail(422);
 		}
 	}
 } satisfies Actions;
