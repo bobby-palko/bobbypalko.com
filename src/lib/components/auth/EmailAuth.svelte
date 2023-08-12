@@ -2,6 +2,7 @@
 	import type { SupabaseClient } from '@supabase/supabase-js';
 	import type { RedirectTo, ViewType } from '$lib/types';
 	import Button from '../util/Button.svelte';
+	import { invalidateAll } from '$app/navigation';
 
 	export let authView: ViewType = 'sign_in';
 	export let email = '';
@@ -49,12 +50,17 @@
 					email,
 					password
 				});
+
 				if (signInError) {
 					error = signInError.message;
+					loading = false;
 				}
-				console.log(data);
 
-				loading = false;
+				if (data.session) {
+					// force the page's load function to re-run, which will redirect us since we're logged in
+					invalidateAll();
+				}
+
 				break;
 			case 'sign_up':
 				passwordErrors = validatePassword(password, verifyPassword);
