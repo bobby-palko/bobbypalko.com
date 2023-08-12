@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance, type SubmitFunction } from '$app/forms';
+	import Button from '$lib/components/util/Button.svelte';
 
 	export let data;
 	export let form;
@@ -64,9 +65,7 @@
 		</div>
 
 		<div class="self-center">
-			<button type="submit" class="btn variant-filled-primary" disabled={loading}
-				>{loading ? 'Loading...' : 'Update'}</button
-			>
+			<Button {loading} style="primary">Update</Button>
 		</div>
 	</form>
 

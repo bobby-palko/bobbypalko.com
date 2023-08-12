@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { SupabaseClient } from '@supabase/supabase-js';
 	import type { RedirectTo, ViewType } from '$lib/types';
+	import Button from '../util/Button.svelte';
 
 	export let authView: ViewType = 'sign_in';
 	export let email = '';
@@ -17,7 +18,7 @@
 
 	/**
 	 * validates password meets some requirements
-	 * TODO: more client side validation (min length, complexity, etc)
+	 * TODO: more client side validation (complexity, etc)
 	 */
 	function validatePassword(password: string, verifyPassword: string): string[] {
 		const passwordErrors = [];
@@ -44,13 +45,15 @@
 
 		switch (authView) {
 			case 'sign_in':
-				const { error: signInError } = await supabaseClient.auth.signInWithPassword({
+				const { data, error: signInError } = await supabaseClient.auth.signInWithPassword({
 					email,
 					password
 				});
 				if (signInError) {
 					error = signInError.message;
 				}
+				console.log(data);
+
 				loading = false;
 				break;
 			case 'sign_up':
@@ -119,7 +122,7 @@
 			required={authView === 'sign_up' || null}
 		/>
 	</label>
-	<button type="submit" class="btn variant-filled-primary">{buttonContent}</button>
+	<Button {loading} style={'primary'}>{buttonContent}</Button>
 	<div class="flex flex-col items-center gap-2">
 		{#if authView === 'sign_up'}
 			<a
