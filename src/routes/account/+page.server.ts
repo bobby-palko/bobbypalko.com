@@ -4,16 +4,16 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 	const session = await getSession();
 
 	if (!session) {
-		throw redirect(303, '/');
+		throw redirect(303, '/login');
 	}
 
 	const { data: profile } = await supabase
 		.from('profiles')
-		.select(`username, full_name, website, avatar_url`)
+		.select(`username, full_name, avatar_url`)
 		.eq('id', session.user.id)
 		.single();
 
-	return { session, profile }
+	return { session, profile };
 }
 
 export const actions = {
@@ -46,13 +46,14 @@ export const actions = {
 			fullName,
 			username,
 			avatarUrl,
-		}
+		};
 	},
 	signout: async ({ locals: { supabase, getSession } }) => {
-		const session = await getSession()
+		const session = await getSession();
+
 		if (session) {
-		await supabase.auth.signOut()
-		throw redirect(303, '/')
+			await supabase.auth.signOut();
+			throw redirect(303, '/');
 		}
 	},
-}
+};
