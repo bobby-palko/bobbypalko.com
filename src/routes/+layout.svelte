@@ -16,10 +16,11 @@
 	} from '@skeletonlabs/skeleton';
 	import Hamburger from '$lib/components/Hamburger.svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
+	import Avatar from '$lib/components/util/Avatar.svelte';
 
 	export let data;
-	let { supabase, session } = data;
-	$: ({ supabase, session } = data);
+	let { supabase, session, avatarUrl } = data;
+	$: ({ supabase, session, avatarUrl } = data);
 
 	onMount(() => {
 		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
@@ -57,6 +58,15 @@
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
 				<LightSwitch width="w-16" height="h-8" />
+				{#if avatarUrl}
+					<a href="/account">
+						<Avatar src={avatarUrl} size="small" />
+					</a>
+				{:else}
+					<a href="/login">
+						<Avatar size="small" />
+					</a>
+				{/if}
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>

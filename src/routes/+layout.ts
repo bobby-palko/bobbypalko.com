@@ -13,5 +13,35 @@ export const load = async ({ fetch, data, depends }) => {
 
 	const { data: { session }} = await supabase.auth.getSession();
 
-	return { supabase, session };
+	let avatarUrl = null;
+
+	if (session) {
+		const { data: url } = await supabase
+		.from('profiles')
+		.select(`avatar_url`)
+		.eq('id', session.user.id)
+		.single();
+
+
+		if (url?.avatar_url) {
+			const path = url.avatar_url;
+			// todo - this is repearted in AvatarForm. abstract out to single reusable function
+			try {
+				const { data, error } = await supabase.storage.from('avatars').download(path);
+	
+				if (error) {
+					throw error;
+				}
+	
+				const url = URL.createObjectURL(data);
+				avatarUrl = url;
+			} catch (error) {
+				if (error instanceof Error) {
+					console.log(`Error downloading image: ${error.message}`);
+				}
+			}
+		}
+	}
+
+	return { supabase, session, avatarUrl };
 }
