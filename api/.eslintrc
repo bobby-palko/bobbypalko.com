@@ -1,0 +1,7 @@
+{
+  "extends": ["wesbos/typescript"],
+  "parserOptions": {
+    "project": ["./api/tsconfig.json"]
+  },
+  "ignorePatterns": ["./api/build/*"]
+}
