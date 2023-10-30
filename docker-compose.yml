@@ -22,10 +22,14 @@ services:
     ports:
       - "3000:3000"  # Map host port to container port
 
-  # front-end:
-  #   build:
-  #     context: ./www
-  #   depends_on:
-  #     - api
-  #   ports:
-  #     - "80:80"  # Map host port to container port
+  www:
+    build:
+      context: ./www
+      target: dev
+    depends_on:
+      - api
+    ports:
+      - "8080:5000"  # Map host port to container port
+      - "24678:24678"  # Map host port to container port
+    volumes:
+      - ./www/src:/usr/src/app/src
